@@ -89,8 +89,10 @@ export class Boid {
         let sum = Vector.ZERO();
         let count = 0;
 
-        ve.filter(v => !Vector.equals(v, this)).forEach(v => {
-            let d = Vector.subtract(location, v.location);
+        ve.forEach(v => {
+            if (Vector.equals(v.location, this.location))
+                return;
+            let d = Vector.subtract(this.location, v.location);
             d = d.length();
             if ((d > 0) &&
                 (d < neighbordist) &&
@@ -113,13 +115,17 @@ export class Boid {
         let sum = Vector.ZERO();
         let count = 0;
 
-        ve.filter(v => !Vector.equals(v, this)).forEach(v => {
-            let d = (location - v.location).length();
-            if ((d > 0) && (d < alignment) && Math.abs(Math.atan2(this.location.y - v.location.y, this.location.x - v.location.x) - Math.atan2(this.velocity.y, this.velocity.x)) < angle) {
+        ve.forEach(v => {
+            if (Vector.equals(v.location, this.location))
+                return;
+
+            let d = Vector.subtract(this.location, v.location).length();
+            if ((d > 0) && (d < alignment) && this.inView(v) < angle) {
                 sum = Vector.add(sum, v.velocity);
                 count++;
             }
         })
+
         if (count > 0) {
             sum = Vector.divide(sum, count);
             sum = sum.normalize();
@@ -142,7 +148,9 @@ export class Boid {
         let sum = Vector.ZERO();
 
 
-        ve.filter(v => Vector.equals(v, this)).forEach(v => {
+        ve.forEach(v => {
+            if (Vector.equals(v.location, this.location))
+                return;
 
             let d = Vector.subtract(this.location, v.location);
             d = d.length();

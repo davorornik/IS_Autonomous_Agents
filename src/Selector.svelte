@@ -36,6 +36,7 @@
             m = [event.pageX, event.pageY - navHeight];
             onCanvas = true;
         } else {
+            $mouseDown = false;
             onCanvas = false;
         }
     }
