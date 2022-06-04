@@ -41,8 +41,8 @@
                     <span class="row">Speed</span>
                 </span>
                    <span class="col">
-                       <span class="row"><input type="number" bind:value={$force} min=0.01 max=1 name="speed"
-                                                step=".02"/></span>
+                       <span class="row"><input type="number" bind:value={$force} min=0.001 max=1 name="speed"
+                                                step=".01"/></span>
                        <span class="row">Force</span>
                     </span>
                 <span class="col">
