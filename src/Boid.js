@@ -42,16 +42,16 @@ export class Boid {
 
         //  note reverse direction
         if (newL.x < pad || newL.x > (w - pad)) {
-            this.velocity.x = -this.velocity.x * this.maxSpeed;
+            this.velocity.x = -this.velocity.x * this.maxSpeed * Math.random();
             reversed = true;
         }
         if (newL.y > (h - pad) || newL.y < pad) {
-            this.velocity.y = -this.velocity.y * this.maxSpeed;
+            this.velocity.y = -this.velocity.y * this.maxSpeed * Math.random();
             reversed = true;
         }
         if (reversed) {
             newL = Vector.add(this.location, this.velocity);
-            this.angle = -this.angle;
+            this.angle = Math.random() * 2 * Math.PI;
         } else {
             this.angle = Math.atan2(newL.y - oldL.y, newL.x - oldL.x);
         }
@@ -67,9 +67,7 @@ export class Boid {
         let desired = Vector.subtract(target, this.location);
         let d = desired.length();
         desired = desired.normalize();
-        if (d < 100)
-            desired = Vector.lerp(Vector.ZERO(), desired, d / r);
-        else desired.multiply(this.maxSpeed);
+        if (d < 100) desired = Vector.lerp(Vector.ZERO(), desired, d / r); else desired.multiply(this.maxSpeed);
         let steer = Vector.subtract(desired, this.velocity);
         if (steer.length() > force) {
             steer = steer.normalize();
@@ -90,13 +88,10 @@ export class Boid {
         let count = 0;
 
         ve.forEach(v => {
-            if (Vector.equals(v.location, this.location))
-                return;
+            if (Vector.equals(v.location, this.location)) return;
             let d = Vector.subtract(this.location, v.location);
             d = d.length();
-            if ((d > 0) &&
-                (d < neighbordist) &&
-                this.inView(v) < angle) {
+            if ((d > 0) && (d < neighbordist) && this.inView(v) < angle) {
                 sum = Vector.add(sum, v.location);
                 count++;
             }
@@ -116,8 +111,7 @@ export class Boid {
         let count = 0;
 
         ve.forEach(v => {
-            if (Vector.equals(v.location, this.location))
-                return;
+            if (Vector.equals(v.location, this.location)) return;
 
             let d = Vector.subtract(this.location, v.location).length();
             if ((d > 0) && (d < alignment) && this.inView(v) < angle) {
@@ -149,8 +143,7 @@ export class Boid {
 
 
         ve.forEach(v => {
-            if (Vector.equals(v.location, this.location))
-                return;
+            if (Vector.equals(v.location, this.location)) return;
 
             let d = Vector.subtract(this.location, v.location);
             d = d.length();
@@ -178,10 +171,7 @@ export class Boid {
     }
 
     advanceForward(distance = this.maxSpeed) {
-        return new Vector(
-            this.location.x + Math.cos(this.angle) * distance,
-            this.location.y + Math.sin(this.angle) * distance
-        );
+        return new Vector(this.location.x + Math.cos(this.angle) * distance, this.location.y + Math.sin(this.angle) * distance);
     }
 
 
