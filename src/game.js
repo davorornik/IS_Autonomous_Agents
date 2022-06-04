@@ -15,10 +15,10 @@ export const mouseDown = writable(false);
 export const speed = writable(3);
 export const view = writable(180);
 export const force = writable(0.1);
-export const fSeek = writable(2);
-export const fSeparate = writable(5);
-export const fAlignment = writable(4);
-export const fCohesion = writable(10);
+export const fSeek = writable(10);
+export const fSeparate = writable(30);
+export const fAlignment = writable(10);
+export const fCohesion = writable(5);
 
 
 function createBoidsStore() {

@@ -45,7 +45,7 @@
         if (event.buttons === 4) { //  middle mouse
             event.preventDefault();
         }
-        $mouseDown = event.buttons === 1;
+        $mouseDown = true;
         handleMouseMove(event);
     }
 
